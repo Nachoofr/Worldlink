@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+
+    container_name: customer-portal-prod
+
+    ports:
+      - "3000:80"
