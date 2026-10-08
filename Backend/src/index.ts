@@ -1,9 +1,11 @@
 import Express from "express";
 import sequelize from "./config/database.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = Express();
 
-app.use(Express.json);
+app.use(Express.json());
+app.use("/auth", authRoutes);
 
 async function startServer() {
   try {

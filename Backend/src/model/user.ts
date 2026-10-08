@@ -242,9 +242,7 @@ User.init(
     sequelize,
 
     modelName: "User",
-
     tableName: "user_base_info",
-
     schema: "user_base",
   },
 );
