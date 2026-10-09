@@ -5,9 +5,6 @@ import authService from "../service/authService.js";
 class AuthController {
   async createUser(req: Request, res: Response) {
     try {
-      console.log("Controller started");
-
-      console.log("Request body:", req.body);
       const data = req.body;
 
       const user = await authService.registerUser(data);
@@ -20,6 +17,18 @@ class AuthController {
       return res.status(400).json({
         message: error.message,
       });
+    }
+  }
+
+  async loginUser(req: Request, res: Response){
+    try {
+        const username = req.body.username;
+        const password = req.body.password;
+        const token = await authService.loginUser(username, password)
+        res.status(200).json({message: "Login Successful", token})
+        
+    } catch (error:any) {
+        res.status(400).json({ message: error.message });
     }
   }
 }
