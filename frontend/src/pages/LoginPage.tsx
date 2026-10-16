@@ -9,23 +9,27 @@ const LoginPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setError("");
+
     try {
       const data = await loginApi(username, password);
 
       console.log("login success", data);
 
-      localStorage.setItem("token", data.token.accessToken);
+      localStorage.setItem("token", data.token);
       // localStorage.setItem("userId", JSON.stringify(data.result.user.id));
 
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       console.log("error", error);
+      setError(error.response?.data?.message || "Invalid username or password");
     }
   };
 
@@ -81,6 +85,8 @@ const LoginPage = () => {
               {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>
           </div>
+
+          {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
 
           <div className="flex items-center justify-between mt-5 mb-6">
             <label className="flex items-center gap-2 cursor-pointer">
